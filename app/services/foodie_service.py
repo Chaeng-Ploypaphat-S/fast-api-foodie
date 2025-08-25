@@ -1,15 +1,16 @@
-def get_all_foodies():
-    db = SessionLocal()
-    db_foodies = db.query(Foodie).all()
-    db.close()
-    return [FoodieRead(id=foodie.id, username=foodie.username) for foodie in db_foodies]
 from app.models.foodie import Foodie
-from app.foodie_schema import FoodieCreate, FoodieRead
+from app.schema.foodie_schema import FoodieCreate, FoodieRead
 from app.database.db import SessionLocal
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def get_all_foodies():
+    db = SessionLocal()
+    db_foodies = db.query(Foodie).all()
+    db.close()
+    return [FoodieRead(id=foodie.id, username=foodie.username) for foodie in db_foodies]
 
 def create_foodie(foodie_data: FoodieCreate):
     db = SessionLocal()
